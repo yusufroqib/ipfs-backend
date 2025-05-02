@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const {uploadImage} = require("./uploadImage.js");
+const rpcProxy = require('./routes/rpcProxy');
 const app = express();
 const port = 5000;
 
@@ -18,6 +19,8 @@ app.post("/uploadImage", (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
+app.use('/api', rpcProxy);
+
 // app.post("/uploadMultipleImages", (req, res) => {
 //   uploadImage
 //     .uploadMultipleImages(req.body.images)
@@ -26,5 +29,5 @@ app.post("/uploadImage", (req, res) => {
 // });
 
 app.listen(port, () => {
-  console.log(`nodemailerProject is listening at http://localhost:${port}`);
+  console.log(`ZetraFi backend server is listening at http://localhost:${port}`);
 });
