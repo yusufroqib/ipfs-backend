@@ -11,10 +11,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@grpc/grpc-js": "^1.13.3",
+    "@grpc/proto-loader": "^0.7.15",
     "@pinata/sdk": "^2.1.0",
     "axios": "^1.9.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
+    "ethers": "^6.13.7",
     "express": "^5.1.0",
     "stream": "^0.0.3",
     "uuidv4": "^6.2.13"

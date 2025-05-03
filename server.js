@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const {uploadImage} = require("./uploadImage.js");
 const rpcProxy = require('./routes/rpcProxy');
+const priceRoute = require('./routes/price');
 const app = express();
 const port = 5000;
 
@@ -20,6 +21,7 @@ app.post("/uploadImage", (req, res) => {
 });
 
 app.use('/api', rpcProxy);
+app.use('/api', priceRoute);
 
 // app.post("/uploadMultipleImages", (req, res) => {
 //   uploadImage
