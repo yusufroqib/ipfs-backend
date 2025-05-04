@@ -70,5 +70,15 @@ module.exports.getSupraOraclePrice = async () => {
 		console.error("Error in main:", error);
 	}
 };
+module.exports.getBytesProof = async () => {
+	try {
+		const proofs = await getProofs();
+
+		const hex = ethers.hexlify(proofs.evm.proof_bytes);
+		return hex;
+	} catch (error) {
+		console.error("Error in main:", error);
+	}
+};
 
 // getSupraOraclePrice();
