@@ -16,6 +16,7 @@ router.get('/get-price', async (req, res) => {
 router.get('/bytes-proof', async (req, res) => {
   try {
     const priceData = await getBytesProof()
+    console.log({priceData})
     res.status(200).json(priceData);
   } catch (error) {
     res.status(error.response?.status || 500).json({
