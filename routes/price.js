@@ -5,6 +5,7 @@ const router = express.Router();
 router.get('/get-price', async (req, res) => {
   try {
     const priceData = await getSupraOraclePrice()
+    // console.log({priceData})
     res.status(200).json(priceData);
   } catch (error) {
     res.status(error.response?.status || 500).json({

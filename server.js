@@ -3,9 +3,10 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { uploadImage } = require("./uploadImage.js");
 const rpcProxy = require("./routes/rpcProxy");
-const priceRoute = require("./routes/price");
 const connectDB = require("./config/db");
-const transactionRoutes = require("./routes/transactionRoutes");const app = express();
+const transactionRoutes = require("./routes/transactionRoutes");
+const priceRoute = require("./routes/price");
+const app = express();
 const port = 5000;
 
 connectDB();
@@ -33,7 +34,7 @@ app.use("/api/transactions", transactionRoutes);
 //     .uploadMultipleImages(req.body.images)
 //     .then((urls) => res.send(urls))
 //     .catch((err) => res.status(500).send(err));
-// });
+//});
 
 app.listen(port, () => {
 	console.log(

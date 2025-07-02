@@ -5,7 +5,7 @@ const ORACLE_PROOF_ABI =
 	"tuple(tuple(uint64 committee_id,bytes32 root,uint256[2] sigs,tuple(tuple(uint32 pair,uint128 price,uint64 timestamp,uint16 decimals,uint64 round)[] committee_feed,bytes32[] proof,bool[] flags) committee_data)[] data)";
 
 async function getProofs() {
-	const address = "testnet-dora-2.supra.com";
+	const address = "mainnet-dora-2.supra.com";
 	const pairIndexes = [1];
 	const chainType = "evm";
 
@@ -18,6 +18,7 @@ async function getProofs() {
 	console.log("Requesting proof for price index : ", request.pair_indexes);
 	return new Promise((resolve, reject) => {
 		client.getProof(request, (err, response) => {
+			// console.log({response})
 			if (err) {
 				console.error("Error:", err.details);
 				reject(err);
