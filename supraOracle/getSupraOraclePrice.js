@@ -24,7 +24,6 @@ async function getProofs() {
 		console.error("Error in getProofs:", error);
 		// throw error;
 	}
-
 }
 
 const deserializeProofBytes = (proofHex) => {
@@ -75,10 +74,11 @@ module.exports.getBytesProof = async () => {
 	try {
 		const proofs = await getProofs();
 
-		const hex = ethers.hexlify(proofs.evm.proof_bytes);
+		const bytesLike = "0x" + proofs.proof_bytes;
+
+		const hex = ethers.hexlify(bytesLike);
 		return hex;
 	} catch (error) {
 		console.error("Error in main:", error);
 	}
 };
-
