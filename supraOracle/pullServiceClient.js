@@ -1,23 +1,19 @@
-const grpc = require('@grpc/grpc-js');
-const protoLoader = require('@grpc/proto-loader');
+const axios = require('axios');
 
 class PullServiceClient {
-  constructor(address) {
-    const PROTO_PATH = __dirname + '/client.proto';
-    const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
-      keepCase: true,
-      longs: String,
-      enums: String,
-      defaults: true,
-      oneofs: true,
+  constructor(baseURL) {
+    this.client = axios.create({
+      baseURL: baseURL,
     });
-
-    const pullProto = grpc.loadPackageDefinition(packageDefinition).pull_service;
-    this.client = new pullProto.PullService(address, grpc.credentials.createSsl());
   }
 
-  getProof(request, callback) {
-    this.client.getProof(request, callback);
+  async getProof(request) {
+    try {
+      const response = await this.client.post('/get_proof', request);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

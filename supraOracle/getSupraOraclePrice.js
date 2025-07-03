@@ -5,7 +5,7 @@ const ORACLE_PROOF_ABI =
 	"tuple(tuple(uint64 committee_id,bytes32 root,uint256[2] sigs,tuple(tuple(uint32 pair,uint128 price,uint64 timestamp,uint16 decimals,uint64 round)[] committee_feed,bytes32[] proof,bool[] flags) committee_data)[] data)";
 
 async function getProofs() {
-	const address = "mainnet-dora-2.supra.com";
+	const address = "https://rpc-testnet-dora-2.supra.com";
 	const pairIndexes = [1];
 	const chainType = "evm";
 
@@ -16,17 +16,15 @@ async function getProofs() {
 		chain_type: chainType,
 	};
 	console.log("Requesting proof for price index : ", request.pair_indexes);
-	return new Promise((resolve, reject) => {
-		client.getProof(request, (err, response) => {
-			// console.log({response})
-			if (err) {
-				console.error("Error:", err.details);
-				reject(err);
-				return;
-			}
-			resolve(response);
-		});
-	});
+	try {
+		const response = await client.getProof(request);
+		console.log("Proof received:", response);
+		return response;
+	} catch (error) {
+		console.error("Error in getProofs:", error);
+		// throw error;
+	}
+
 }
 
 const deserializeProofBytes = (proofHex) => {
@@ -64,8 +62,10 @@ const deserializeProofBytes = (proofHex) => {
 module.exports.getSupraOraclePrice = async () => {
 	try {
 		const proofs = await getProofs();
+		const bytesLike = "0x" + proofs.proof_bytes;
 
-		const hex = ethers.hexlify(proofs.evm.proof_bytes);
+		const hex = ethers.hexlify(bytesLike);
+		// console.log({hex})
 		return deserializeProofBytes(hex);
 	} catch (error) {
 		console.error("Error in main:", error);
@@ -82,4 +82,3 @@ module.exports.getBytesProof = async () => {
 	}
 };
 
-// getSupraOraclePrice();
